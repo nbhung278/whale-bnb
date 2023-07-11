@@ -1,10 +1,11 @@
-import React from "react";
-import NotFound from "../components/notFound/NotFound";
+import SliderBar from "../components/sliders/SliderBar";
+import HomeContent from "./homeContent";
 
 const Home = () => {
 	return (
 		<div className="h-[200vh] min-w-[600px]">
-			<div className="pt-[90px]">home</div>
+			<SliderBar />
+			<HomeContent />
 		</div>
 	);
 };

@@ -20,6 +20,7 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
 	const [userName, setUserName] = useState<any>(null);
 	const [email, setEmail] = useState<any>(null);
 	const [password, setPassword] = useState<any>(null);
+	const [passwordConfirm, setPasswordConfirm] = useState<any>(null);
 	const query = useQuery({ queryKey: ["tests"], queryFn: getTestApi });
 
 	const mutation = useMutation({
@@ -61,8 +62,11 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
 	const handleChangePassword = (event: any) => {
 		setPassword(event.target.value);
 	};
+	const handleChangePasswordConfirm = (event: any) => {
+		setPasswordConfirm(event.target.value);
+	};
 	const handleSubmit = () => {
-		const data = { firstName, lastName, userName, email, password };
+		const data = { firstName, lastName, userName, email, password, passwordConfirm };
 		mutation.mutate(data);
 	};
 
@@ -138,12 +142,22 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
 								variant="outlined"
 							/>
 						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								color="secondary"
+								fullWidth={true}
+								type="password"
+								id="outlined-basic"
+								label={t("passwordConfirm")}
+								onChange={(event) => handleChangePasswordConfirm(event)}
+								variant="outlined"
+							/>
+						</Grid>
 					</Grid>
 					<Typography variant="caption" display="block" sx={{ mt: 1 }}>
 						{t(
 							"We'll send a verification code to the email address you used to create your account. If you don't verify your address, you won't be able to create an account"
 						)}
-						{t(`. `)}
 						<span className="font-semibold underline">
 							{t("Privacy Policy")}
 						</span>
@@ -168,7 +182,7 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
 							fullWidth={true}
 							color="primary"
 						>
-							{t("Login")}
+							{t("Log in")}
 						</Button>
 					</div>
 				</div>

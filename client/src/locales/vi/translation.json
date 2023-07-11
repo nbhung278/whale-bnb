@@ -24,5 +24,12 @@
 	"Privacy Policy": "Chính sách về quyền riêng tư",
 	"Please read the policy carefully before logging in": "Vui lòng đọc kỹ chính sách trước khi đăng nhập",
 	"Welcome to": "Chào mừng bạn đến với",
-	"Continue with": "Tiếp tục với"
+	"Continue with": "Tiếp tục với",
+	"Filter": "Bộ lọc",
+	"passwordConfirm": "Xác nhận mật khẩu",
+	"Username": "Tên đăng nhập",
+	"House": "Nhà",
+	"Apartment": "Căn hộ",
+	"Room": "Phòng",
+	"Hotel": "khách sạn"
 }

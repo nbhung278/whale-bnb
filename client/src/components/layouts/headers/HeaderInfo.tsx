@@ -47,7 +47,7 @@ const HeaderInfo = () => {
 				</div>
 				<Divider />
 				<div className="hover:bg-gray-100 px-5 py-3 hover:cursor-pointer">
-					<span className="text-gray-700">{t("Whalebnb your home")}</span>
+					<span className="text-gray-700">{t("Whalebnb your homeContent")}</span>
 				</div>
 				<div className="hover:bg-gray-100 px-5 py-3 hover:cursor-pointer">
 					<span className="text-gray-700">{t("Account")}</span>
@@ -79,7 +79,7 @@ const HeaderInfo = () => {
 				</div>
 				<Divider />
 				<div className="hover:bg-gray-100 px-5 py-3 hover:cursor-pointer">
-					<span className="text-gray-700">{t("Whalebnb your home")}</span>
+					<span className="text-gray-700">{t("Whalebnb your homeContent")}</span>
 				</div>
 				<div className="hover:bg-gray-100 px-5 py-3 hover:cursor-pointer">
 					<span className="text-gray-700">{t("Help")}</span>
@@ -90,7 +90,7 @@ const HeaderInfo = () => {
 		<>
 			<div className="hidden lg:flex items-center gap-10">
 				<div className="border border-none rounded-full py-2 px-5 hover:border-gray-100 hover:bg-gray-100 hover:cursor-pointer">
-					<span className="text-gray-800">{t("Whalebnb your home")}</span>
+					<span className="text-gray-800">{t("Whalebnb your homeContent")}</span>
 				</div>
 				<div className="border border-none rounded-full py-2 px-5 hover:border-gray-100 hover:bg-gray-100 hover:cursor-pointer">
 					<HiOutlineMap size="20px" />

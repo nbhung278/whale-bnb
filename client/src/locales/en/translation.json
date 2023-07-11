@@ -24,6 +24,12 @@
 	"Privacy Policy": "Privacy Policy",
 	"Please read the policy carefully before logging in": "Please read the policy carefully before logging in",
 	"Welcome to": "Welcome to",
-	"Continue with": "Continue with"
-	
+	"Continue with": "Continue with",
+	"Filter": "Filter",
+	"passwordConfirm": "passwordConfirm",
+	"Username": "Username",
+	"House": "House",
+	"Apartment": "Apartment",
+	"Room": "Room",
+	"Hotel": "Hotel"
 }

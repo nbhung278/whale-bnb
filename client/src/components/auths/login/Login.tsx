@@ -189,7 +189,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 			title={LoginTitle()}
 			content={LoginContent()}
 			actions={LoginActions()}
-		></BaseDialog>
+		/>
 	);
 };
 
