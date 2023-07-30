@@ -5,9 +5,9 @@ export default {
 		extend: {
 			colors: {
 				primary: "#F5385D", // #9c27b0 F5385D
-				secondary: "#9c27b0"
+				secondary: "#9c27b0",
 			},
 		},
 	},
-	plugins: [],
+	plugins: [require("@tailwindcss/line-clamp")],
 };

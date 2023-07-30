@@ -1,12 +1,14 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseGuards, Body } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport/dist';
 import { Request } from 'express';
+import { UserService } from './user.service';
+import { UploadAvatarDto } from './dto/user.dto';
 
 @Controller('user')
 export class UserController {
-  @UseGuards(AuthGuard('jwt'))
-  @Get('me')
-  getAll(@Req() req: Request) {
-    return req.user;
+  constructor(private userService: UserService) {}
+  @Post('uploadAvatar')
+  async uploadAvartar(@Body() dto: UploadAvatarDto) {
+    return this.userService.uploadAvartar(dto);
   }
 }

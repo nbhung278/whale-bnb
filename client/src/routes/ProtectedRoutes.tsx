@@ -5,7 +5,11 @@ const cookies = new Cookies();
 
 const ProtectedRoutes = ({ children }: any) => {
 	const token = cookies.get("TOKEN");
-	return token ? <>{children}</> : <Navigate to="/" replace={true} />;
+	return token?.access_token ? (
+		<>{children}</>
+	) : (
+		<Navigate to="/login" replace={true} />
+	);
 };
 
 export default ProtectedRoutes;

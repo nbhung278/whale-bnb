@@ -6,9 +6,12 @@ import { FcGoogle } from "react-icons/fc";
 import { ImFacebook2 } from "react-icons/im";
 import { ImAppleinc } from "react-icons/im";
 import { useMutation } from "@tanstack/react-query";
-import { loginApi } from "../../../apis/test";
+import { loginApi } from "../../../apis/auth";
 import { toast } from "react-hot-toast";
 import Cookies from "universal-cookie";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 interface LoginFormProps {
 	openDialog: boolean;
@@ -21,8 +24,16 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 	const { openDialog, setOpenDialog, isLogin, setIsLogin } = props;
 	const { t } = useTranslation();
 	const cookies = new Cookies();
-	const [email, setEmail] = useState<any>(null);
-	const [password, setPassword] = useState<any>(null);
+	const formSchema = Yup.object().shape({
+		email: Yup.string().required("Email is required"),
+		password: Yup.string().required("Password is required"),
+	});
+	const formOptions = { resolver: yupResolver(formSchema) };
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm(formOptions);
 
 	const mutation = useMutation({
 		mutationFn: loginApi,
@@ -32,24 +43,18 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 		onSuccess: async (data: any, variables: any, context: any) => {
 			setOpenDialog(false);
 			setIsLogin(true);
-			cookies.set("TOKEN", data.data.token, {
+			cookies.set("TOKEN", data.data.data, {
 				path: "/",
 			});
-			window.location.href = "/auth";
+			console.log("dataUser", data);
+			// window.location.href = "/auth";
 			toast.success(data.data.message, { duration: 3000 });
 		},
 		onSettled: (data, error, variables, context) => {
 			console.log("done");
 		},
 	});
-	const handleChangeEmail = (event: any) => {
-		setEmail(event.target.value);
-	};
-	const handleChangePassword = (event: any) => {
-		setPassword(event.target.value);
-	};
-	const handleSubmit = () => {
-		const data = { email, password };
+	const onSubmit = (data: any) => {
 		mutation.mutate(data);
 	};
 	const LoginTitle = () => {
@@ -67,45 +72,53 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 					{` `}Whalebnb
 				</Typography>
 				<div className="mt-7">
-					<Grid container spacing={1}>
-						<Grid item xs={12}>
-							<TextField
-								color="secondary"
-								fullWidth={true}
-								id="outlined-basic"
-								label={t("Email or Username")}
-								placeholder="example@gmail.com"
-								onChange={(event) => handleChangeEmail(event)}
-								variant="outlined"
-							/>
+					<form onSubmit={handleSubmit(onSubmit)} method="post">
+						<Grid container spacing={1}>
+							<Grid item xs={12}>
+								<TextField
+									color="secondary"
+									type="email"
+									fullWidth={true}
+									id="email"
+									label="Email"
+									{...register("email")}
+									error={Boolean(errors.email)}
+									helperText={errors.email?.message}
+									placeholder="example@gmail.com"
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									color="secondary"
+									type="password"
+									fullWidth={true}
+									id="password"
+									label={t("Password")}
+									{...register("password")}
+									error={Boolean(errors.password)}
+									helperText={errors.password?.message}
+									variant="outlined"
+								/>
+							</Grid>
 						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								color="secondary"
-								fullWidth={true}
-								id="outlined-basic"
-								label={t("Password")}
-								onChange={(event) => handleChangePassword(event)}
-								variant="outlined"
-							/>
-						</Grid>
-					</Grid>
-					<Typography variant="caption" display="block" sx={{ mt: 1 }}>
-						{t("Please read the policy carefully before logging in")}
-						{`. `}
-						<span className="font-semibold underline">
-							{t("Privacy Policy")}
-						</span>
-					</Typography>
-					<Button
-						sx={{ mt: 3 }}
-						variant="contained"
-						fullWidth={true}
-						color="secondary"
-						onClick={handleSubmit}
-					>
-						{t("Continue")}
-					</Button>
+						<Typography variant="caption" display="block" sx={{ mt: 1 }}>
+							{t("Please read the policy carefully before logging in")}
+							{`. `}
+							<span className="font-semibold underline">
+								{t("Privacy Policy")}
+							</span>
+						</Typography>
+						<Button
+							sx={{ mt: 3 }}
+							variant="contained"
+							type="submit"
+							fullWidth={true}
+							color="secondary"
+						>
+							{t("Continue")}
+						</Button>
+					</form>
 					<Divider sx={{ mt: 3, fontSize: "13px" }}>{t("Or")}</Divider>
 					<div className="mt-5">
 						<Button

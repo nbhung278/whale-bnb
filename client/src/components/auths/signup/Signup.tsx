@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import BaseDialog from "../../dialogs/BaseDialog";
 import { useTranslation } from "react-i18next";
 import { Button, Divider, Grid, TextField, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getTestApi, signupApi } from "../../../apis/test";
+import { signupApi } from "../../../apis/auth";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface SignupFormProps {
 	openDialog: boolean;
@@ -12,23 +15,48 @@ interface SignupFormProps {
 	setOpenLoginDialog?: any;
 }
 
+interface paramsProps {
+	firstName: string;
+	lastName: string;
+	userName: string;
+	email: string;
+	password: string;
+	passwordConfirm: string;
+}
+
 const SignupForm: React.FC<SignupFormProps> = (props) => {
 	const { openDialog, setOpenDialog, setOpenLoginDialog } = props;
 	const { t } = useTranslation();
-	const [firstName, setFirstName] = useState<any>(null);
-	const [lastName, setLastName] = useState<any>(null);
-	const [userName, setUserName] = useState<any>(null);
-	const [email, setEmail] = useState<any>(null);
-	const [password, setPassword] = useState<any>(null);
-	const [passwordConfirm, setPasswordConfirm] = useState<any>(null);
-	const query = useQuery({ queryKey: ["tests"], queryFn: getTestApi });
+	const formSchema = Yup.object().shape({
+		firstName: Yup.string()
+			.required("First Name is required")
+			.max(255, "Password must be less than 255 characters"),
+		lastName: Yup.string()
+			.required("Last Name is required")
+			.max(255, "Password must be less than 255 characters"),
+		userName: Yup.string()
+			.required("User Name is required")
+			.max(255, "Password must be less than 255 characters"),
+		email: Yup.string()
+			.required("Email is required")
+			.max(255, "Password must be less than 255 characters"),
+		password: Yup.string()
+			.required("Password is required")
+			.min(6, "Password must be at 3 char long")
+			.max(32, "Password must be less than 32 characters"),
+		passwordConfirm: Yup.string()
+			.required("Password is required")
+			.oneOf([Yup.ref("password")], "Passwords does not match"),
+	});
+	const formOptions = { resolver: yupResolver(formSchema) };
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm(formOptions);
 
 	const mutation = useMutation({
 		mutationFn: signupApi,
-		// onMutate: (variables) => {
-
-		// 	return { id: 1 };
-		// },
 		onError: (error: any, variables: any, context: any) => {
 			toast.error(error.response.data.message, { duration: 3000 });
 		},
@@ -47,27 +75,10 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
 			setOpenLoginDialog(true);
 		}, 550);
 	};
-	const handleChangeFirstName = (event: any) => {
-		setFirstName(event.target.value);
-	};
-	const handleChangeLastName = (event: any) => {
-		setLastName(event.target.value);
-	};
-	const handleChangeUserName = (event: any) => {
-		setUserName(event.target.value);
-	};
-	const handleChangeEmail = (event: any) => {
-		setEmail(event.target.value);
-	};
-	const handleChangePassword = (event: any) => {
-		setPassword(event.target.value);
-	};
-	const handleChangePasswordConfirm = (event: any) => {
-		setPasswordConfirm(event.target.value);
-	};
-	const handleSubmit = () => {
-		const data = { firstName, lastName, userName, email, password, passwordConfirm };
-		mutation.mutate(data);
+	const onSubmit = (data: paramsProps) => {
+		console.log("data submit", data);
+		const params = { ...data, type: "user" };
+		mutation.mutate(params);
 	};
 
 	const SignupTitle = () => {
@@ -85,107 +96,118 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
 					{t("Welcome to")}
 					{` `}Whalebnb
 				</Typography>
-				<div className="mt-7">
-					<Grid container spacing={1}>
-						<Grid item xs={6}>
-							<TextField
-								color="secondary"
-								fullWidth={true}
-								id="outlined-basic"
-								label={t("First Name")}
-								onChange={(event) => handleChangeFirstName(event)}
-								defaultValue={firstName}
-								variant="outlined"
-							/>
+				<form onSubmit={handleSubmit(onSubmit)} method="post">
+					<div className="mt-7">
+						<Grid container spacing={1}>
+							<Grid item xs={6}>
+								<TextField
+									color="secondary"
+									fullWidth={true}
+									id="firstName"
+									label={t("First Name")}
+									{...register("firstName")}
+									error={Boolean(errors.firstName)}
+									helperText={errors.firstName?.message}
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item xs={6}>
+								<TextField
+									color="secondary"
+									fullWidth={true}
+									id="lastName"
+									label={t("Last Name")}
+									{...register("lastName")}
+									error={Boolean(errors.lastName)}
+									helperText={errors.lastName?.message}
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									color="secondary"
+									fullWidth={true}
+									id="userName"
+									label={t("Username")}
+									{...register("userName")}
+									error={Boolean(errors.userName)}
+									helperText={errors.userName?.message}
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									color="secondary"
+									fullWidth={true}
+									id="email"
+									label="Email"
+									{...register("email")}
+									error={Boolean(errors.email)}
+									helperText={errors.email?.message}
+									type="email"
+									placeholder="example@gmail.com"
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									color="secondary"
+									fullWidth={true}
+									type="password"
+									id="password"
+									label={t("Password")}
+									{...register("password")}
+									error={Boolean(errors.password)}
+									helperText={errors.password?.message}
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									color="secondary"
+									fullWidth={true}
+									type="password"
+									id="passwordConfirm"
+									label={t("passwordConfirm")}
+									{...register("passwordConfirm")}
+									error={Boolean(errors.passwordConfirm)}
+									helperText={errors.passwordConfirm?.message}
+									variant="outlined"
+								/>
+							</Grid>
 						</Grid>
-						<Grid item xs={6}>
-							<TextField
-								color="secondary"
-								fullWidth={true}
-								id="outlined-basic"
-								label={t("Last Name")}
-								onChange={(event) => handleChangeLastName(event)}
-								defaultValue={lastName}
-								variant="outlined"
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								color="secondary"
-								fullWidth={true}
-								id="outlined-basic"
-								label={t("Username")}
-								onChange={(event) => handleChangeUserName(event)}
-								variant="outlined"
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								color="secondary"
-								fullWidth={true}
-								id="outlined-basic"
-								label={t("Email or Username")}
-								onChange={(event) => handleChangeEmail(event)}
-								type="email"
-								placeholder="example@gmail.com"
-								variant="outlined"
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								color="secondary"
-								fullWidth={true}
-								type="password"
-								id="outlined-basic"
-								label={t("Password")}
-								onChange={(event) => handleChangePassword(event)}
-								variant="outlined"
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								color="secondary"
-								fullWidth={true}
-								type="password"
-								id="outlined-basic"
-								label={t("passwordConfirm")}
-								onChange={(event) => handleChangePasswordConfirm(event)}
-								variant="outlined"
-							/>
-						</Grid>
-					</Grid>
-					<Typography variant="caption" display="block" sx={{ mt: 1 }}>
-						{t(
-							"We'll send a verification code to the email address you used to create your account. If you don't verify your address, you won't be able to create an account"
-						)}
-						<span className="font-semibold underline">
-							{t("Privacy Policy")}
-						</span>
-					</Typography>
-					<Button
-						sx={{ mt: 3 }}
-						type="button"
-						variant="contained"
-						fullWidth={true}
-						color="secondary"
-						onClick={handleSubmit}
-					>
-						{t("Continue")}
-					</Button>
-					<Divider sx={{ mt: 3, fontSize: "13px" }}>
-						{t("Or if you had an account")}
-					</Divider>
-					<div className="mt-5">
+						<Typography variant="caption" display="block" sx={{ mt: 1 }}>
+							{t(
+								"We'll send a verification code to the email address you used to create your account. If you don't verify your address, you won't be able to create an account"
+							)}
+							<span className="font-semibold underline">
+								{t("Privacy Policy")}
+							</span>
+						</Typography>
 						<Button
-							onClick={returnLoginDialog}
+							sx={{ mt: 3 }}
+							type="submit"
 							variant="contained"
 							fullWidth={true}
-							color="primary"
+							color="secondary"
 						>
-							{t("Log in")}
+							{t("Continue")}
 						</Button>
+						<Divider sx={{ mt: 3, fontSize: "13px" }}>
+							{t("Or if you had an account")}
+						</Divider>
+						<div className="mt-5">
+							<Button
+								onClick={returnLoginDialog}
+								variant="contained"
+								fullWidth={true}
+								color="primary"
+							>
+								{t("Log in")}
+							</Button>
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		);
 	};

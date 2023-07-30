@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import LoginForm from "../../auths/login/Login";
 import SignupForm from "../../auths/signup/Signup";
 import Cookies from "universal-cookie";
+import { Link } from "react-router-dom";
 
 const HeaderInfo = () => {
 	const cookies = new Cookies();
@@ -15,13 +16,16 @@ const HeaderInfo = () => {
 	const [openSignupDialog, setOpenSignupDialog] = useState<boolean>(false);
 	const [isLogin, setIsLogin] = useState<boolean>(false);
 	const { t } = useTranslation();
-	console.log('cookies',cookies);
-	const token = cookies.get("TOKEN");
+	const userInfo = cookies.get("TOKEN");
+	const avatar = cookies.get("AVATAR");
+	const token = userInfo?.access_token;
+	console.log("userInfo", userInfo);
 
 	const logout = () => {
 		// destroy the cookie
 		setOpen(false);
 		cookies.remove("TOKEN", { path: "/" });
+		cookies.remove("AVATAR", { path: "/" });
 		window.location.href = "/";
 	};
 	const handleOpenLoginDialog = () => {
@@ -47,10 +51,14 @@ const HeaderInfo = () => {
 				</div>
 				<Divider />
 				<div className="hover:bg-gray-100 px-5 py-3 hover:cursor-pointer">
-					<span className="text-gray-700">{t("Whalebnb your homeContent")}</span>
+					<span className="text-gray-700">
+						{t("Whalebnb your homeContent")}
+					</span>
 				</div>
 				<div className="hover:bg-gray-100 px-5 py-3 hover:cursor-pointer">
-					<span className="text-gray-700">{t("Account")}</span>
+					<Link to={"/account-settings"} className="text-gray-700">
+						{t("Account")}
+					</Link>
 				</div>
 				<Divider />
 				<div className="hover:bg-gray-100 px-5 py-3 hover:cursor-pointer">
@@ -79,7 +87,9 @@ const HeaderInfo = () => {
 				</div>
 				<Divider />
 				<div className="hover:bg-gray-100 px-5 py-3 hover:cursor-pointer">
-					<span className="text-gray-700">{t("Whalebnb your homeContent")}</span>
+					<span className="text-gray-700">
+						{t("Whalebnb your homeContent")}
+					</span>
 				</div>
 				<div className="hover:bg-gray-100 px-5 py-3 hover:cursor-pointer">
 					<span className="text-gray-700">{t("Help")}</span>
@@ -90,7 +100,9 @@ const HeaderInfo = () => {
 		<>
 			<div className="hidden lg:flex items-center gap-10">
 				<div className="border border-none rounded-full py-2 px-5 hover:border-gray-100 hover:bg-gray-100 hover:cursor-pointer">
-					<span className="text-gray-800">{t("Whalebnb your homeContent")}</span>
+					<span className="text-gray-800">
+						{t("Whalebnb your homeContent")}
+					</span>
 				</div>
 				<div className="border border-none rounded-full py-2 px-5 hover:border-gray-100 hover:bg-gray-100 hover:cursor-pointer">
 					<HiOutlineMap size="20px" />
@@ -102,7 +114,7 @@ const HeaderInfo = () => {
 					>
 						<HiMenu size="25px" />
 						{/* <HiUserCircle size="40px" /> */}
-						<Avatar alt="Remy Sharp" src={pumpkin} />
+						<Avatar alt="Remy Sharp" src={avatar || userInfo?.image || ""} />
 					</div>
 				</div>
 				<DrawerBase
