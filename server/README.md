@@ -45,6 +45,13 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## config .env
+
+```bash
+# development
+$ DATABASE_URL = "collect in mongodb clound"
+$ JWT_SECRET='RANDOM-TOKEN'
+
 ## Test
 
 ```bash
