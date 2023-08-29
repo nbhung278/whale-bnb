@@ -71,3 +71,6 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+<!-- DATABASE_URL='mongodb+srv://nbhung278:nbhung278@cluster0.h0umobn.mongodb.net/mydb?retryWrites=true&w=majority'
+JWT_SECRET='RANDOM-TOKEN' -->
