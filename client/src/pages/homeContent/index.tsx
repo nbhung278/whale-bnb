@@ -65,7 +65,7 @@ const HomeContent = () => {
 			>
 				{data?.map((el: any) => {
 					return (
-						<Grid key={el.id} item xs={3} sx={{ marginTop: "30px" }}>
+						<Grid key={el.id} item sm={6} xs={12} md={4} sx={{ marginTop: "30px" }}>
 							<BaseItem data={el} />
 						</Grid>
 					);
