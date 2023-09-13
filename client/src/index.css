@@ -2,34 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Kablammo&family=Poppins:ital@1&family=Silkscreen&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Kablammo&family=Poppins:ital@1&family=Silkscreen&display=swap');
 
 :root {
-	font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 .logo-text {
-	font-family: "Kablammo", cursive;
+  font-family: 'Kablammo', cursive;
 }
 ::-webkit-scrollbar {
-	width: 8px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-	background: white;
+  background: white;
 }
 
 ::-webkit-scrollbar-thumb {
-	background-image: linear-gradient(
-		to bottom,
-		rgb(195, 194, 194),
-		rgb(195, 194, 194)
-	);
-	border-radius: 15px;
+  background-image: linear-gradient(to bottom, rgb(195, 194, 194), rgb(195, 194, 194));
+  border-radius: 15px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background-image: linear-gradient(
-		to bottom,
-		rgb(179, 179, 179),
-		rgb(179, 179, 179)
-	);
+  background-image: linear-gradient(to bottom, rgb(179, 179, 179), rgb(179, 179, 179));
 }
