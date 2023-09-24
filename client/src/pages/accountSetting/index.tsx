@@ -1,5 +1,3 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
 import Cookies from 'universal-cookie'
 import Grid from '@mui/material/Grid'
 import SettingBox from '../../components/boxes/SettingBox'
@@ -19,7 +17,6 @@ type SettingArrays = {
 }
 
 const AccountSettings = () => {
-  const { t } = useTranslation()
   const cookies = new Cookies()
   const userInfo = cookies.get('TOKEN')
   const settingArrays: SettingArrays[] = [

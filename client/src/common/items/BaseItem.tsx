@@ -2,15 +2,16 @@ import { FiStar } from 'react-icons/fi'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import { Pagination, Autoplay } from 'swiper'
+import { Pagination, Autoplay } from '../../../node_modules/swiper'
 import './style.css'
 import { AiOutlineHeart } from 'react-icons/ai'
+import { useTranslation } from 'react-i18next'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const BaseItem = ({ data }: any) => {
-  console.log('data', data)
-
+  const { t } = useTranslation()
   return (
-    <div className='w-[320px] h-[300px]'>
+    <div className=''>
       <div className='w-full h-full rounded-xl overflow-hidden relative'>
         <Swiper
           loop={true}
@@ -22,9 +23,9 @@ const BaseItem = ({ data }: any) => {
             dynamicBullets: true
           }}
           modules={[Pagination, Autoplay]}
-          className='mySwiper cursor-pointer'
+          className='mySwiper cursor-pointer h-[280px]'
         >
-          {data.images?.map((image: any) => {
+          {data.images?.map((image: { id: string | number; url: string }) => {
             return (
               <SwiperSlide key={image.id}>
                 <img width='100%' className='w-full h-full object-cover object-center' src={image.url} alt='img' />
@@ -34,14 +35,13 @@ const BaseItem = ({ data }: any) => {
         </Swiper>
         <div className='absolute z-10 top-3 right-3 cursor-pointer'>
           <AiOutlineHeart size='24px' color='white' />
-          {/* <AiFillHeart size='24px' color='white' /> */}
         </div>
       </div>
       <div className='grid mt-2 grid-cols-5 justify-between font-bold gap-4'>
-        <span className='col-span-4 text-ellipsis whitespace-nowrap overflow-hidden cursor-pointer'>
+        <span className='col-span-3 text-ellipsis whitespace-nowrap overflow-hidden cursor-pointer'>
           {data.address}
         </span>
-        <span className='col-span-1 cursor-pointer'>
+        <span className='col-span-2 cursor-pointer text-right'>
           <FiStar className='inline pb-[2px]' size='20px' /> {data.stars}{' '}
         </span>
       </div>
@@ -53,7 +53,7 @@ const BaseItem = ({ data }: any) => {
       </div>
       <div className='underline mt-[2px] cursor-pointer'>
         <span className='font-bold'>{`${data.price}$`}</span>
-        <span> tổng trước thuế</span>
+        <span>{t('Total before tax')}</span>
       </div>
     </div>
   )

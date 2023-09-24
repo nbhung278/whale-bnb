@@ -4,6 +4,7 @@ import Cookies from 'universal-cookie'
 import { BsCheck2, BsBalloon } from 'react-icons/bs'
 import { HiOutlineMap } from 'react-icons/hi'
 import SettingFooter from '../../components/layouts/footers/SettingFooter'
+import { AiOutlineHeart } from 'react-icons/ai'
 
 const UserInfo = () => {
   const cookies = new Cookies()
@@ -100,7 +101,7 @@ const UserInfo = () => {
                 <Grid item xs={6}>
                   <Grid container spacing={2} direction='row' alignItems='center' justifyContent='start'>
                     <Grid item>
-                      <BsBalloon size='24px' />
+                      <AiOutlineHeart size='24px' />
                     </Grid>
                     <Grid item>Thứ mà tôi luôn nghĩ đến: Em</Grid>
                   </Grid>

@@ -3,12 +3,11 @@ import BaseDialog from '../../dialogs/BaseDialog'
 import { useTranslation } from 'react-i18next'
 import { Button, Divider, Grid, TextField, Typography } from '@mui/material'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { signupApi } from '../../../apis/auth'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useSignupUserMutation } from '../../../services/user.service'
 
 interface SignupFormProps {
   openDialog: boolean
@@ -43,26 +42,26 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
       .oneOf([Yup.ref('password')], 'Passwords does not match')
   })
   const formOptions = { resolver: yupResolver(formSchema) }
+  const [signupUser] = useSignupUserMutation()
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm(formOptions)
 
-  const mutation = useMutation({
-    mutationFn: signupApi,
-    onError: (error: any, variables: any, context: any) => {
-      toast.error(error.response.data.message, { duration: 3000 })
-    },
-    onSuccess: async (data: any, variables: any, context: any) => {
-      setOpenDialog(false)
-      toast.success(data.data.message, { duration: 3000 })
-    },
-    onSettled: (data, error, variables, context) => {
-      console.log('done')
-      setLoading(false)
-    }
-  })
+  // const mutation = useMutation({
+  //   mutationFn: signupApi,
+  //   onError: (error: any, variables: any, context: any) => {
+  //     toast.error(error.response.data.message, { duration: 3000 })
+  //   },
+  //   onSuccess: async (data: any, variables: any, context: any) => {
+  //     setOpenDialog(false)
+  //     toast.success(data.data.message, { duration: 3000 })
+  //   },
+  //   onSettled: (data, error, variables, context) =>
+  //     setLoading(false)
+  //   }
+  // })
 
   const returnLoginDialog = () => {
     setOpenDialog(false)
@@ -70,11 +69,21 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
       setOpenLoginDialog(true)
     }, 550)
   }
-  const onSubmit = (data: paramsProps) => {
-    console.log('data submit', data)
+  const onSubmit = async (dataReq: paramsProps) => {
     setLoading(true)
-    const params = { ...data, type: 'user' }
-    mutation.mutate(params)
+    try {
+      const result: any = await signupUser(dataReq)
+      const message: string = result?.data?.message
+      setOpenDialog(false)
+      toast.success(message, { duration: 3000 })
+    } catch (error: any) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+    // setLoading(true)
+    // const params = { ...data, type: 'user' }
+    // mutation.mutate(params)
   }
 
   const SignupTitle = () => {

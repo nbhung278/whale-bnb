@@ -40,15 +40,13 @@ export class AuthDto {
   // @IsDateString()
   deletedAt: Date;
 
+  type: string;
+
   @IsString()
   @IsNotEmpty()
   @MinLength(6)
   @MaxLength(64)
   password: string;
-
-  @IsString()
-  @IsNotEmpty()
-  type: string;
 
   @Match('password', {
     message: "The confirmation password doesn't match the password",

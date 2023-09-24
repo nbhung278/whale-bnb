@@ -18,8 +18,6 @@ const HeaderInfo = () => {
   const userInfo = cookies.get('TOKEN')
   const avatar = cookies.get('AVATAR')
   const token = userInfo?.access_token
-  console.log('userInfo', userInfo)
-
   const logout = () => {
     // destroy the cookie
     setOpen(false)
@@ -52,11 +50,9 @@ const HeaderInfo = () => {
         <div className='hover:bg-gray-100 px-5 py-3 hover:cursor-pointer'>
           <span className='text-gray-700'>{t('Whalebnb your homeContent')}</span>
         </div>
-        <div className='hover:bg-gray-100 px-5 py-3 hover:cursor-pointer'>
-          <Link to={'/account-settings'} className='text-gray-700'>
-            {t('Account')}
-          </Link>
-        </div>
+        <Link to={'/account-settings'} className='text-gray-700'>
+          <div className='hover:bg-gray-100 px-5 py-3 hover:cursor-pointer'>{t('Account')}</div>
+        </Link>
         <Divider />
         <div className='hover:bg-gray-100 px-5 py-3 hover:cursor-pointer'>
           <span className='text-gray-700'>{t('Help')}</span>
@@ -98,7 +94,9 @@ const HeaderInfo = () => {
             <Avatar alt='Remy Sharp' src={avatar || userInfo?.image || ''} />
           </div>
         </div>
-        <DrawerBase anchor='right' open={open} content={list()} setOpen={setOpen} />
+        <DrawerBase anchor='right' open={open} content={list()} setOpen={setOpen}>
+          ''
+        </DrawerBase>
       </div>
       <LoginForm
         setOpenDialog={setOpenLoginDialog}

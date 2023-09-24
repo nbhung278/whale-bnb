@@ -1,8 +1,6 @@
 import React from 'react'
-import { ImProfile } from 'react-icons/im'
-
 interface SettingBoxProps {
-  icon?: any
+  icon?: string | JSX.Element
   title: string
   content: string
 }

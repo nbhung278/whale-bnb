@@ -1,11 +1,14 @@
+import { Suspense, lazy } from 'react'
 import SliderBar from '../components/sliders/SliderBar'
-import HomeContent from './homeContent'
 
+const HomeContent = lazy(() => import('./homeContent'))
 const Home = () => {
   return (
     <div className='h-[200vh] min-w-[600px]'>
       <SliderBar />
-      <HomeContent />
+      <Suspense fallback={<p>Loading...</p>}>
+        <HomeContent />
+      </Suspense>
     </div>
   )
 }

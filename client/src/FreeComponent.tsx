@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function FreeComponent() {
   return (
     <div className='h-[200vh] min-w-[600px]'>

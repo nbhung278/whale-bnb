@@ -1,0 +1,107 @@
+{
+  "locations": [
+    {
+      "id": 1,
+      "address": "Hai ba chung street, Hanoi, VietNam",
+      "distance": 3443,
+      "startDate": "06/12/2023",
+      "endDate": "11/12/2023",
+      "price": 1200,
+      "stars": 5,
+      "images": [
+        {
+          "id": 1,
+          "url": "https://tubepthongminhgiare.com/wp-content/uploads/2019/11/thi-cong-noi-that-dep-bien-hoa-dong-nai-5.jpg"
+        },
+        {
+          "id": 2,
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1FaD3FuKPKdZSC8Okl2ETYUUmGm-LRna3kw&usqp=CAU"
+        },
+        {
+          "id": 3,
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZQdj3pVjYws_uSnhw6rb6C-JW6w0eoY3ir36Ogy_OYHTovGR0XfS6UtcLGdfkPJLXhng&usqp=CAU"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "address": "Nha trang, Viet Nam",
+      "distance": 3443,
+      "startDate": "01/12/2023",
+      "endDate": "02/12/2023",
+      "price": 190,
+      "stars": 4.5,
+      "images": [
+        {
+          "id": 5,
+          "url": "https://ik.imagekit.io/tvlk/blog/2022/06/dia-diem-du-lich-nha-trang-1.jpg?tr=dpr-2,w-675"
+        },
+        {
+          "id": 6,
+          "url": "https://dulichlive.com/nha-trang/wp-content/uploads/sites/3/2019/12/ve-may-bay-thanh-hoa-nha-trang1.jpg"
+        },
+        {
+          "id": 7,
+          "url": "https://bazantravel.com/cdn/medias/uploads/56/56417-nha-tho-da-nha-trang-1.jpg"
+        },
+        {
+          "id": 8,
+          "url": "https://ceotravel.com.vn/wp-content/uploads/2020/04/tour-nha-trang.jpg"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "address": "Maldives",
+      "distance": 3443,
+      "startDate": "01/12/2023",
+      "endDate": "02/12/2023",
+      "price": 190,
+      "stars": 4.5,
+      "images": [
+        {
+          "id": 9,
+          "url": "https://images.unsplash.com/photo-1586495985096-787fb4a54ac0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG1hbGRpdmVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+        },
+        {
+          "id": 10,
+          "url": "https://images.unsplash.com/photo-1578922746465-3a80a228f223?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWFsZGl2ZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "address": "Paris, French Republic",
+      "distance": 3443,
+      "startDate": "01/12/2023",
+      "endDate": "02/12/2023",
+      "price": 190,
+      "stars": 4.5,
+      "images": [
+        {
+          "id": 13,
+          "url": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UGFyaXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "address": "Rome",
+      "distance": 3443,
+      "startDate": "01/12/2023",
+      "endDate": "02/12/2023",
+      "price": 190,
+      "stars": 4.5,
+      "images": [
+        {
+          "id": 14,
+          "url": "https://images.unsplash.com/photo-1525874684015-58379d421a52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Um9tZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+        },
+        {
+          "id": 15,
+          "url": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Um9tZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+        }
+      ]
+    }
+  ]
+}

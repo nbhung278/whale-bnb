@@ -8,7 +8,7 @@ import 'swiper/css/navigation'
 import './styles.css'
 
 // import required modules
-import { Navigation } from 'swiper'
+import { Navigation } from '../../../node_modules/swiper'
 
 export default function NavBaseSlider({ classes, items }: any) {
   return (

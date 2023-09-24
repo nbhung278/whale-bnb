@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Checkbox, Divider, FormControlLabel, Grid, InputAdornment, TextField } from '@mui/material'
+import { Button, Divider, FormControlLabel, Grid, InputAdornment, TextField } from '@mui/material'
 import NavBaseSlider from '../../common/sliders/NavBaseSlider'
 import Tsunami from '../../assets/images/icon-tsunami.png'
 import Hotel from '../../assets/images/star-hotel.png'
@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next'
 import BaseDialog from '../dialogs/BaseDialog'
 import House from '../../assets/images/icons8-house-64.png'
 import Room from '../../assets/images/room.png'
-import BaseCheckbox from '../../common/checkboxs/BaseCheckbox'
+import BaseCheckbox from '../../common/checkboxes/BaseCheckbox'
 import RangeSlider from '../../common/sliders/RangeSlider'
 
 type ItemsProp = {
@@ -120,7 +120,7 @@ const SliderBar = () => {
     { id: 10, name: 'Hair dryer' }
   ]
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
+  const handleChange = (newValue: number | number[]) => {
     setValue(newValue as number[])
   }
 

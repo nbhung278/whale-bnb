@@ -6,13 +6,13 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import { FcGoogle } from 'react-icons/fc'
 import { ImFacebook2 } from 'react-icons/im'
 import { ImAppleinc } from 'react-icons/im'
-import { useMutation } from '@tanstack/react-query'
-import { loginApi } from '../../../apis/auth'
 import { toast } from 'react-hot-toast'
 import Cookies from 'universal-cookie'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
+import { useLoginUserMutation } from '../../../services/user.service'
+import { UserType } from '../../../types/user.type'
 
 interface LoginFormProps {
   openDialog: boolean
@@ -21,8 +21,13 @@ interface LoginFormProps {
   setIsLogin?: any
 }
 
+type ParamsLoginType = {
+  email: string
+  password: string
+}
+
 const LoginForm = (props: LoginFormProps) => {
-  const { openDialog, setOpenDialog, isLogin, setIsLogin } = props
+  const { openDialog, setOpenDialog, setIsLogin } = props
   const { t } = useTranslation()
   const cookies = new Cookies()
   const [loading, setLoading] = useState<boolean>(false)
@@ -37,29 +42,45 @@ const LoginForm = (props: LoginFormProps) => {
     formState: { errors }
   } = useForm(formOptions)
 
-  const mutation = useMutation({
-    mutationFn: loginApi,
-    onError: (error: any, variables: any, context: any) => {
-      toast.error(error.response.data.message, { duration: 3000 })
-    },
-    onSuccess: async (data: any, variables: any, context: any) => {
-      setOpenDialog(false)
-      setIsLogin(true)
-      cookies.set('TOKEN', data.data.data, {
+  const [loginUser] = useLoginUserMutation()
+  // const mutation = useMutation({
+  //   mutationFn: loginApi,
+  //   onError: (error: any, variables: any, context: any) => {
+  //     toast.error(error.response.data.message, { duration: 3000 })
+  //   },
+  //   onSuccess: async (data: any, variables: any, context: any) => {
+  //     setOpenDialog(false)
+  //     setIsLogin(true)
+
+  //     cookies.set('TOKEN', data.data.data, {
+  //       path: '/'
+  //     })
+  //     // window.location.href = "/auth";
+  //     toast.success(data.data.message, { duration: 3000 })
+  //   },
+  //   onSettled: (data, error, variables, context) => {
+  //     setLoading(false)
+  //   }
+  // })
+  const onSubmit = async (dataReq: ParamsLoginType) => {
+    setLoading(true)
+    try {
+      const result: any = await loginUser(dataReq)
+      const data: UserType = result.data.data
+      const message: string = result.data.message
+      cookies.set('TOKEN', data, {
         path: '/'
       })
-      console.log('dataUser', data)
-      // window.location.href = "/auth";
-      toast.success(data.data.message, { duration: 3000 })
-    },
-    onSettled: (data, error, variables, context) => {
-      console.log('done')
+      setOpenDialog(false)
+      setIsLogin(true)
+      toast.success(message as string, { duration: 3000 })
+    } catch (error: any) {
+      console.log(error)
+      toast.error(error?.response?.data?.message || 'Error', { duration: 3000 })
+    } finally {
       setLoading(false)
     }
-  })
-  const onSubmit = (data: any) => {
-    setLoading(true)
-    mutation.mutate(data)
+    // mutation.mutate(dataReq)
   }
   const LoginTitle = () => {
     return <span className='text-[18px] font-semibold text-[#222222]'>{t('Log in')}</span>
