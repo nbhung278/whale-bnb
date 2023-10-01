@@ -14,6 +14,31 @@ export type UserType = {
   image?: string
   phone: string
   role?: string
-  type?: string
+  type?: UserType
   updatedAt?: string
+}
+
+export type ImageLocation = {
+  id: string
+  url: string
+}
+export type LocationType = {
+  id: string
+  address: string
+  country: string
+  createdAt?: string
+  updatedAt?: string
+  description: string
+  distance: string
+  startDate?: string
+  endDate?: string
+  name?: string
+  price?: number
+  servicePrice?: number
+  tax: string
+  type: number
+  userId: string
+  images: ImageLocation[]
+  user: UserType
+  rates?: number
 }

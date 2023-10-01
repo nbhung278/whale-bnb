@@ -3,10 +3,11 @@ import BaseItem from '../../common/items/BaseItem'
 import { useGetLocationsQuery } from '../../services/location.service'
 import { Fragment } from 'react'
 import SkeletonLocation from '../../components/SkeletonLocation'
+import { LocationType } from '../../types/user.type'
 
 const HomeContent = () => {
   const { data, isLoading, isFetching } = useGetLocationsQuery('')
-  console.log(data, isLoading, isFetching)
+  const locations: LocationType[] = data?.data
 
   return (
     <div className='px-20'>
@@ -30,7 +31,7 @@ const HomeContent = () => {
       ) : (
         <Grid container direction='row' justifyContent='start' alignItems='center' spacing={1}>
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {data?.map((location: any) => {
+          {locations?.map((location: any) => {
             return (
               <Grid key={`${location.id}${location.address}`} item sm={6} xs={12} md={3} sx={{ marginTop: '30px' }}>
                 <BaseItem data={location} />

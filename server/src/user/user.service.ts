@@ -28,4 +28,9 @@ export class UserService {
       };
     }
   }
+  callUser() {
+    console.log('da goi den user');
+
+    return 'da goi den user';
+  }
 }

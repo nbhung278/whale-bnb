@@ -46,6 +46,7 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm(formOptions)
 
@@ -73,11 +74,17 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
     setLoading(true)
     try {
       const result: any = await signupUser(dataReq)
-      const message: string = result?.data?.message
-      setOpenDialog(false)
-      toast.success(message, { duration: 3000 })
+      const message: string = result?.data?.message || result?.error?.data?.message
+
+      if (result?.data?.status === 200) {
+        setOpenDialog(false)
+        toast.success(message, { duration: 3000 })
+        reset()
+      } else {
+        toast.error(message, { duration: 3000 })
+      }
     } catch (error: any) {
-      console.log(error)
+      toast.error('loi', { duration: 3000 })
     } finally {
       setLoading(false)
     }

@@ -6,6 +6,7 @@ import { Pagination, Autoplay } from '../../../node_modules/swiper'
 import './style.css'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
+import Tooltip from '@mui/material/Tooltip'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const BaseItem = ({ data }: any) => {
@@ -38,11 +39,11 @@ const BaseItem = ({ data }: any) => {
         </div>
       </div>
       <div className='grid mt-2 grid-cols-5 justify-between font-bold gap-4'>
-        <span className='col-span-3 text-ellipsis whitespace-nowrap overflow-hidden cursor-pointer'>
-          {data.address}
-        </span>
+        <Tooltip title={data.address}>
+          <span className='col-span-3 text-ellipsis whitespace-nowrap overflow-hidden cursor-pointer'>{data.name}</span>
+        </Tooltip>
         <span className='col-span-2 cursor-pointer text-right'>
-          <FiStar className='inline pb-[2px]' size='20px' /> {data.stars}{' '}
+          <FiStar className='inline pb-[2px]' size='20px' /> {data.rates}{' '}
         </span>
       </div>
       <div className='mt-[2px]'>

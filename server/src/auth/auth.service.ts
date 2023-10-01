@@ -1,4 +1,9 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto, LoginDto } from './dto';
@@ -33,11 +38,24 @@ export class AuthService {
         deletedAt,
       } = dto;
 
+      const existsUser = await this.prisma.user.findUnique({
+        where: {
+          email: email,
+        },
+      });
+
+      if (existsUser) {
+        throw new HttpException(
+          { message: 'This email has been used!', status: 400 },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
       const hash = await bcrypt.hash(password, saltOrRounds);
+
       const user = await this.prisma.user.create({
         data: {
           firstName,
-          type,
+          type: 'USER',
           lastName,
           userName,
           email,
@@ -51,7 +69,7 @@ export class AuthService {
           password: hash,
         },
       });
-      return { message: 'Sign up successfully !', data: user };
+      return { message: 'Sign up successfully !', data: user, status: 200 };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
